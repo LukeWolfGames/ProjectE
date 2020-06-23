@@ -1,16 +1,22 @@
 import Phaser from "phaser";
 import logoImg from "./assets/logo.png";
+import bootScene from "./scenes/bootScene.js";
+import gameScene from "./scenes/gameScene.js"
 
+//! This is my old one.
 const config = {
-  type: Phaser.AUTO,
-  parent: "phaser-example",
   width: 800,
   height: 600,
-  scene: {
-    preload: preload,
-    create: create
+  backgroundColor: 0x000000,
+  scene: [bootScene, gameScene],
+  pixelArt: true,
+  physics: {
+      default: "arcade",
+      arcade: {
+          debug: false
+      }
   }
-};
+}
 
 const game = new Phaser.Game(config);
 
