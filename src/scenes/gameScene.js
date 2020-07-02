@@ -44,7 +44,15 @@ export default class GameScene extends Phaser.Scene {
         this.background2.displayWidth = this.game.config.width;
         this.background2.displayHeight = this.game.config.height;
 
+        // player input
+        this.cursorKeys = this.input.keyboard.createCursorKeys();
+        this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        this.projectiles = this.add.group();
+        this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
+        // player's ship
         this.player = new Player(this, this.game.config.width / 2 - 8, this.game.config.height - 64, "player");
+
         // // player's ship
         // this.player = this.physics.add.sprite(this.game.config.width / 2 - 8, this.game.config.height - 64, "player");
         // this.player.setScale(2);
@@ -57,12 +65,6 @@ export default class GameScene extends Phaser.Scene {
         // console.log(this.player);
         // this.player.play("thrust");
         // this.player.setCollideWorldBounds(true);
-        this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-
-        // player input
-        this.cursorKeys = this.input.keyboard.createCursorKeys();
-        this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-        this.projectiles = this.add.group();
 
         // beam
         this.anims.create({
@@ -186,7 +188,7 @@ export default class GameScene extends Phaser.Scene {
         this.moveBackground(this.background2, this.backgroundSpeed);
 
         // player moving
-        this.movePlayerManager();
+        this.player.movePlayerManager(this.cursorKeys);
 
         // player firing
         if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
@@ -218,23 +220,23 @@ export default class GameScene extends Phaser.Scene {
         }
     }
 
-    movePlayerManager() {
-        if(this.cursorKeys.left.isDown) {
-            this.player.setVelocityX(-this.playerSpeed);
-        } else if(this.cursorKeys.right.isDown) {
-            this.player.setVelocityX(this.playerSpeed);
-        } else {
-            this.player.setVelocityX(0);
-        }
+    // movePlayerManager() {
+    //     if(this.cursorKeys.left.isDown) {
+    //         this.player.setVelocityX(-this.playerSpeed);
+    //     } else if(this.cursorKeys.right.isDown) {
+    //         this.player.setVelocityX(this.playerSpeed);
+    //     } else {
+    //         this.player.setVelocityX(0);
+    //     }
 
-        if(this.cursorKeys.up.isDown) {
-            this.player.setVelocityY(-this.playerSpeed);
-        } else if(this.cursorKeys.down.isDown) {
-            this.player.setVelocityY(this.playerSpeed);
-        } else {
-            this.player.setVelocityY(0);
-        }
-    }
+    //     if(this.cursorKeys.up.isDown) {
+    //         this.player.setVelocityY(-this.playerSpeed);
+    //     } else if(this.cursorKeys.down.isDown) {
+    //         this.player.setVelocityY(this.playerSpeed);
+    //     } else {
+    //         this.player.setVelocityY(0);
+    //     }
+    // }
 
     pickPowerUp(player, powerUp) {
         powerUp.disableBody(true, true);
