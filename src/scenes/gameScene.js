@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import Explosion from "../classes/explosion.js";
 import Beam from "../classes/beam.js";
+import Player from "../classes/player.js";
 
 export default class GameScene extends Phaser.Scene {
     constructor() {
@@ -43,18 +44,19 @@ export default class GameScene extends Phaser.Scene {
         this.background2.displayWidth = this.game.config.width;
         this.background2.displayHeight = this.game.config.height;
 
-        // player's ship
-        this.player = this.physics.add.sprite(this.game.config.width / 2 - 8, this.game.config.height - 64, "player");
-        this.player.setScale(2);
-        this.anims.create({
-            key: "thrust",
-            frames: this.anims.generateFrameNumbers("player"),
-            frameRate: 20,
-            repeat: -1,
-        });
-        console.log(this.player);
-        this.player.play("thrust");
-        this.player.setCollideWorldBounds(true);
+        this.player = new Player(this, this.game.config.width / 2 - 8, this.game.config.height - 64, "player");
+        // // player's ship
+        // this.player = this.physics.add.sprite(this.game.config.width / 2 - 8, this.game.config.height - 64, "player");
+        // this.player.setScale(2);
+        // this.anims.create({
+        //     key: "thrust",
+        //     frames: this.anims.generateFrameNumbers("player"),
+        //     frameRate: 20,
+        //     repeat: -1,
+        // });
+        // console.log(this.player);
+        // this.player.play("thrust");
+        // this.player.setCollideWorldBounds(true);
         this.spacebar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
         // player input
