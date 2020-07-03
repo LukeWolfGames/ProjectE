@@ -187,16 +187,6 @@ export default class GameScene extends Phaser.Scene {
         this.moveBackground(this.background, this.backgroundSpeed);
         this.moveBackground(this.background2, this.backgroundSpeed);
 
-        // player moving
-        this.player.movePlayerManager(this.cursorKeys);
-
-        // player firing
-        if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
-            if(this.player.active) {
-                this.shootBeam();
-            }
-        }
-
         for(var i = 0; i < this.projectiles.getChildren().length; i++) {
             var beam = this.projectiles.getChildren()[i];
             beam.update();
@@ -220,23 +210,6 @@ export default class GameScene extends Phaser.Scene {
         }
     }
 
-    // movePlayerManager() {
-    //     if(this.cursorKeys.left.isDown) {
-    //         this.player.setVelocityX(-this.playerSpeed);
-    //     } else if(this.cursorKeys.right.isDown) {
-    //         this.player.setVelocityX(this.playerSpeed);
-    //     } else {
-    //         this.player.setVelocityX(0);
-    //     }
-
-    //     if(this.cursorKeys.up.isDown) {
-    //         this.player.setVelocityY(-this.playerSpeed);
-    //     } else if(this.cursorKeys.down.isDown) {
-    //         this.player.setVelocityY(this.playerSpeed);
-    //     } else {
-    //         this.player.setVelocityY(0);
-    //     }
-    // }
 
     pickPowerUp(player, powerUp) {
         powerUp.disableBody(true, true);
@@ -255,10 +228,6 @@ export default class GameScene extends Phaser.Scene {
         ship.x = randomX;
     }
 
-    shootBeam() {
-       var beam = new Beam(this);
-       this.projectiles.add(beam);
-    }
 
     hurtPlayer(player, enemy) {
         this.resetShipPos(enemy);
