@@ -20,11 +20,6 @@ export default class GameScene extends Phaser.Scene {
         this.explosionShipSizeWidth = 0;
         this.explosionShipSizeHeight = 0;
 
-        // making the player flash
-        this.flashDelay = 100;
-        this.playerFlashCount = 0;
-        this.playerFlashMax = 5;
-
         // score
         this.score = 0;
     }
@@ -52,19 +47,6 @@ export default class GameScene extends Phaser.Scene {
 
         // player's ship
         this.player = new Player(this, this.game.config.width / 2 - 8, this.game.config.height - 64, "player");
-
-        // // player's ship
-        // this.player = this.physics.add.sprite(this.game.config.width / 2 - 8, this.game.config.height - 64, "player");
-        // this.player.setScale(2);
-        // this.anims.create({
-        //     key: "thrust",
-        //     frames: this.anims.generateFrameNumbers("player"),
-        //     frameRate: 20,
-        //     repeat: -1,
-        // });
-        // console.log(this.player);
-        // this.player.play("thrust");
-        // this.player.setCollideWorldBounds(true);
 
         // beam
         this.anims.create({
@@ -115,16 +97,18 @@ export default class GameScene extends Phaser.Scene {
         this.enemies.add(this.ship3);
 
         // explosion effect
-        this.explosion = this.add.sprite(-100, -100, "explosion");
-        this.explosion.setScale(5);
-        this.anims.create({
-            key: "explode",
-            frames: this.anims.generateFrameNumbers("explosion"),
-            frameRate: 20,
-            repeat: 0,
-            hideOnComplete: true
-        });
+        // this.explosion = this.add.sprite(-100, -100, "explosion");
+        // this.explosion.setScale(5);
+        // this.anims.create({
+        //     key: "explode",
+        //     frames: this.anims.generateFrameNumbers("explosion"),
+        //     frameRate: 20,
+        //     repeat: 0,
+        //     hideOnComplete: true
+        // });
 
+        // this.explosion = new Explosion(this, -100, -100);
+        
         // powerups
         // powerup animations
         this.anims.create({
@@ -174,7 +158,7 @@ export default class GameScene extends Phaser.Scene {
             projectile.destroy()
         });
         this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp, null, this);
-        this.physics.add.overlap(this.player, this.enemies, this.hurtPlayer, null, this);
+        this.physics.add.overlap(this.player, this.enemies, this.player.hurtPlayer, null, this.player);
         this.physics.add.overlap(this.projectiles, this.enemies, this.hitEnemy, null, this);
 
         // score
@@ -226,75 +210,6 @@ export default class GameScene extends Phaser.Scene {
         ship.y = -100;
         var randomX = Phaser.Math.Between(-100, this.game.config.width);
         ship.x = randomX;
-    }
-
-
-    hurtPlayer(player, enemy) {
-        this.resetShipPos(enemy);
-        // this.flashPlayer(player);
-
-        if(this.player.alpha < 1) {
-            return;
-        }
-
-        var explosion = new Explosion(this, player.x, player.y);
-
-        player.disableBody(true, true);
-        
-        this.time.addEvent({
-            delay: 1000,
-            callback: this.resetPlayer,
-            callbackScope: this,
-            loop: false
-        });
-    }
-
-    flashPlayer(player) {
-
-        if(this.playerFlashCount === this.playerFlashMax) {
-            this.playerFlashCount = 0;
-            return;
-        } else {
-            this.playerFlashCount++;
-        }
-
-        player.alpha = 0;
-        this.time.addEvent({
-            delay: this.flashDelay,
-            callback: function() {
-                player.alpha = 1;
-                this.time.addEvent({
-                    delay: this.flashDelay,
-                    callback: function() {
-                        this.flashPlayer(player);
-                    },
-                    callbackScope: this,
-                    repeat: 0,
-                });
-            },
-            callbackScope: this,
-            repeat: 0,
-        });
-    }
-
-    resetPlayer() {
-        var x = this.game.config.width / 2 - 8;
-        var y = this.game.config.height + 64;
-        this.player.enableBody(true, x, y, true, true);
-
-        this.player.alpha = 0.5;
-
-        var tween = this.tweens.add({
-            targets: this.player,
-            y: this.game.config.height - 64,
-            ease: "Power1",
-            duration: 1500,
-            repeat: 0,
-            onComplete: function() {
-                this.player.alpha = 1;
-            },
-            callbackScope: this
-        });
     }
 
     hitEnemy(projectile, enemy) {
