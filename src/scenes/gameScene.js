@@ -1,7 +1,6 @@
 import Phaser from "phaser";
-import Explosion from "../classes/explosion.js";
-import Beam from "../classes/beam.js";
 import Player from "../classes/player.js";
+import EnemyInterceptor from "../classes/enemyInterceptor.js";
 
 export default class GameScene extends Phaser.Scene {
     constructor() {
@@ -48,69 +47,46 @@ export default class GameScene extends Phaser.Scene {
         // player's ship
         this.player = new Player(this, this.game.config.width / 2 - 8, this.game.config.height - 64, "player");
 
-        // beam
-        this.anims.create({
-            key: "beam_anim",
-            frames: this.anims.generateFrameNumbers("beam"),
-            frameRate: 20,
-            repeat: -1
-        });
-
         // enemy ships
-        // ship1
-        this.ship1 = this.add.sprite(this.game.config.width/2 - 150, this.game.config.height/2, "ship1");
-        this.ship1.setScale(2);
+        // enemyInterceptor
+        this.enemyInterceptor = new EnemyInterceptor(this.game.config.width/2 - 150, this.game.config.height/2);
+        this.enemyInterceptor.setScale(2);
         this.anims.create({
-            key: "ship1_anim",
-            frames: this.anims.generateFrameNumbers("ship1"),
+            key: "enemyInterceptor_anim",
+            frames: this.anims.generateFrameNumbers("enemyInterceptor"),
             frameRate: 20,
             repeat: -1
         });
-        this.ship1.play("ship1_anim");
+        this.enemyInterceptor.play("enemyInterceptor_anim");
 
-        // ship2
-        this.ship2 = this.add.sprite(this.game.config.width/2, this.game.config.height/2, "ship2");
-        this.ship2.setScale(2);
+        // enemyFighter
+        this.enemyFighter = this.add.sprite(this.game.config.width/2, this.game.config.height/2, "enemyFighter");
+        this.enemyFighter.setScale(2);
         this.anims.create({
-            key: "ship2_anim",
-            frames: this.anims.generateFrameNumbers("ship2"),
+            key: "enemyFighter_anim",
+            frames: this.anims.generateFrameNumbers("enemyFighter"),
             frameRate: 20,
             repeat: -1
         });
-        this.ship2.play("ship2_anim");
+        this.enemyFighter.play("enemyFighter_anim");
 
-        // ship3
-        this.ship3 = this.add.sprite(this.game.config.width/2 + 150, this.game.config.height/2, "ship3");
-        this.ship3.setScale(2);
+        // enemyShuttle
+        this.enemyShuttle = this.add.sprite(this.game.config.width/2 + 150, this.game.config.height/2, "enemyShuttle");
+        this.enemyShuttle.setScale(2);
         this.anims.create({
-            key: "ship3_anim",
-            frames: this.anims.generateFrameNumbers("ship3"),
+            key: "enemyShuttle_anim",
+            frames: this.anims.generateFrameNumbers("enemyShuttle"),
             frameRate: 20,
             repeat: -1
         });
-        this.ship3.play("ship3_anim");
+        this.enemyShuttle.play("enemyShuttle_anim");
 
         // grouping enemy ships
         this.enemies = this.physics.add.group();
-        this.enemies.add(this.ship1);
-        this.enemies.add(this.ship2);
-        this.enemies.add(this.ship3);
+        this.enemies.add(this.enemyInterceptor);
+        this.enemies.add(this.enemyFighter);
+        this.enemies.add(this.enemyShuttle);
 
-        // explosion effect
-        // this.explosion = this.add.sprite(-100, -100, "explosion");
-        // this.explosion.setScale(5);
-        // this.anims.create({
-        //     key: "explode",
-        //     frames: this.anims.generateFrameNumbers("explosion"),
-        //     frameRate: 20,
-        //     repeat: 0,
-        //     hideOnComplete: true
-        // });
-
-        // this.explosion = new Explosion(this, -100, -100);
-        
-        // powerups
-        // powerup animations
         this.anims.create({
             key: "red",
             frames: this.anims.generateFrameNumbers("power-up", {
@@ -157,7 +133,7 @@ export default class GameScene extends Phaser.Scene {
         this.physics.add.collider(this.projectiles, this.powerUps, function(projectile, powerUp) {
             projectile.destroy()
         });
-        this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp, null, this);
+        this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp, null, this.player);
         this.physics.add.overlap(this.player, this.enemies, this.player.hurtPlayer, null, this.player);
         this.physics.add.overlap(this.projectiles, this.enemies, this.hitEnemy, null, this);
 
@@ -177,9 +153,9 @@ export default class GameScene extends Phaser.Scene {
         }
 
         // moving ships
-        this.moveShip(this.ship1, 3);
-        this.moveShip(this.ship2, 2);
-        this.moveShip(this.ship3, 1.5);
+        this.enemyInterceptor.moveEnemyShip(this.enemyInterceptor, 3);
+        this.Enemy.moveEnemyShip(this.enemyFighter, 2);
+        this.Enemy.moveEnemyShip(this.enemyShuttle, 1.5);
     }
 
     moveBackground(background, backgroundSpeed) {
@@ -194,31 +170,26 @@ export default class GameScene extends Phaser.Scene {
         }
     }
 
+    // moveShip(ship, speed) {
+    //     ship.y += speed;
+    //     if(ship.y > this.game.config.height + 100) {
+    //         this.resetShipPos(ship);
+    //     }
+    // }
 
-    pickPowerUp(player, powerUp) {
-        powerUp.disableBody(true, true);
-    }
+    // resetShipPos(ship) {
+    //     ship.y = -100;
+    //     var randomX = Phaser.Math.Between(-100, this.game.config.width);
+    //     ship.x = randomX;
+    // }
 
-    moveShip(ship, speed) {
-        ship.y += speed;
-        if(ship.y > this.game.config.height + 100) {
-            this.resetShipPos(ship);
-        }
-    }
+    // hitEnemy(projectile, enemy) {
 
-    resetShipPos(ship) {
-        ship.y = -100;
-        var randomX = Phaser.Math.Between(-100, this.game.config.width);
-        ship.x = randomX;
-    }
+    //     var explosion = new Explosion(this, enemy.x, enemy.y);
 
-    hitEnemy(projectile, enemy) {
-
-        var explosion = new Explosion(this, enemy.x, enemy.y);
-
-        projectile.destroy();
-        this.resetShipPos(enemy);
-        this.score += 15;
-        this.scoreLabel.text = "$" + this.score;
-    }
+    //     projectile.destroy();
+    //     this.resetShipPos(enemy);
+    //     this.score += 15;
+    //     this.scoreLabel.text = "$" + this.score;
+    // }
 }

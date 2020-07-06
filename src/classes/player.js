@@ -4,7 +4,7 @@ import Explosion from "./explosion.js";
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y) {
-        super(scene, x, y, "player")
+        super(scene, x, y, "player");
         
         // player expected set up
         // variables
@@ -74,10 +74,14 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         // player firing
         if (Phaser.Input.Keyboard.JustDown(this.cursorKeys.space)) {
             if(this.active) {
-                let beam = new Beam(this.scene);
+                this.beam = new Beam(this.scene);
                 console.log(this.scene.projectiles.countActive());
             }
         }
+    }
+
+    pickPowerUp(player, powerUp) {
+        powerUp.disableBody(true, true);
     }
 
     hurtPlayer(player, enemy) {

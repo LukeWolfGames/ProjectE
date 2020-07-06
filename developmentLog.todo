@@ -1,0 +1,15 @@
+☐ Complete class integration @started(02-07-20 23:07)
+    06/07/2020 (Supplemental):
+        We have just been optmising the project from the tutorial template.
+        Up until the optimisation of the template for this project, I have mainly been doing this on my own.
+        Mohammed Maqbol has joined me in the effort to organise classes accordingly since the tutorial provided a messy way of organising all code. Good for beginners but not for people who are planning to do a game with this template.
+        It appears that during optimisation, we need to create a group class for the enemies.
+        The enemies have different speeds and in the future will probably have different abilities as well, or perhaps different cannons or weapons.
+        We need to be able to separate the classes between each type of enemy so that we can make these changes without interfering with other enemies.
+        At least, that is the future of this game after class optimisation.
+        After we finish with the classes, it will be pushed to our repository and made publically avialable for anyone that wants to use it.
+        Additionally, I made some minor differences to the tutorial version, so the code may not be exactly the same despite the class implementations.
+    02/07/2020:
+        This project is new and followed the directions of Luis Zuno in his YouTube videos.
+        The goal of this project will be to implement classes for making this type of game.
+        Developers for this task will be completed by: Luke Wolf (LukeWolfGames) and Mohommad Maqbol (Enjoy2Live).

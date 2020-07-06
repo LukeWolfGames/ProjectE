@@ -16,15 +16,15 @@ export default class BootScene extends Phaser.Scene {
         });
         
         // ships
-        this.load.spritesheet("ship1", "../src/assets/ship.png",{
+        this.load.spritesheet("enemyInterceptor", "../src/assets/ship.png",{
             frameWidth: 16,
             frameHeight: 16
         });
-        this.load.spritesheet("ship2", "../src/assets/ship2.png", {
+        this.load.spritesheet("enemyFighter", "../src/assets/ship2.png", {
             frameWidth: 32,
             frameHeight: 16
         });
-        this.load.spritesheet("ship3", "../src/assets/ship3.png",{
+        this.load.spritesheet("enemyShuttle", "../src/assets/ship3.png",{
             frameWidth: 32,
             frameHeight: 32
         });
