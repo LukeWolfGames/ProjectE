@@ -1,4 +1,12 @@
 ☐ Complete class integration @started(02-07-20 23:07)
+    07/07/2020 (Supplemental):
+        Still working on complete class integration.
+        The problem we are having is that grouping the enemies into a class seems harder than we thought.
+        We are following the example of the Phaser Mini Degree that shows us that we can create an Enemy Group Class and then put all of the enemy classes into tha group.
+        Then we can refer to the global and specific enemy class functions accordingly.
+        However, we are working on setting up gameScene.js to recognise only the enemy group class and not have to instantiate the other classes into the scene since there can be a lot of enemies and we have all of them organised into the enemy group class, along with their respective class files.
+        Currently, the enemyInterceptor is the one we need to work on in order to faciliate any functionality with the enemy, then we can work on the others.
+        The current error we are receiving is that the EnemyInterceptor is not defined. From what we know of this already is that the enemyInterceptor.js class file has not been imported into game scene. This contradicts what we were supposed to be working on so we are going to clean up the gameScene.js for the intended methods we have just stated.
     06/07/2020 (Supplemental):
         We have just been optmising the project from the tutorial template.
         Up until the optimisation of the template for this project, I have mainly been doing this on my own.

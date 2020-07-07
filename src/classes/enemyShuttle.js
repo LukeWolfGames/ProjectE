@@ -1,9 +1,9 @@
 import Phaser from "phaser";
 import Enemy from "./enemy.js";
 
-export default class EnemyInterceptor extends Phaser.Physics.Arcade.Sprite {
+export default class EnemyShuttle extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y) {
-        super(scene, x, y, "enemyInterceptor");
+        super(scene, x, y, "enemyShuttle");
         // this.scene = scene;
         this.initAnim();
     }
@@ -11,11 +11,11 @@ export default class EnemyInterceptor extends Phaser.Physics.Arcade.Sprite {
     initAnim() {
         this.setScale(2);
         this.scene.anims.create({
-            key: "enemyInterceptor_anim",
-            frames: this.scene.anims.generateFrameNumbers("enemyInterceptor"),
+            key: "enemyShuttle_anim",
+            frames: this.scene.anims.generateFrameNumbers("enemyShuttle"),
             frameRate: 20,
             repeat: -1
         });
-        this.play("enemyInterceptor_anim");
+        this.play("enemyShuttle_anim");
     }
 }

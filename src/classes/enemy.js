@@ -1,15 +1,34 @@
 import Phaser from "phaser";
-import enemyInterceptor from "./enemyInterceptor";
+import EnemyInterceptor from "../classes/enemyInterceptor.js";
+import EnemyFighter from "../classes/enemyFighter.js"
+import EnemyShuttle from "../classes/enemyShuttle.js"
 
-export default class Enemy extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y) {
+export default class Enemy extends Phaser.Physics.Arcade.Group {
+    constructor(scene, x, y, children) {
         super(scene, x, y);
         this.scene = scene;
+
+        this.createEnemyGroup(scene, children)
+    }
+
+    createEnemyGroup(scene, children) {
+        children.forEach(enemy => {
+            // switch (enemy.texture.key) {
+            //     case enemyInterceptor:
+                    
+            //         break;
+            
+            //     default:
+            //         break;
+            // } 
+            console.log(enemy);
+            enemy = new EnemyInterceptor(scene, enemy.x, enemy.y);
+        });
     }
 
     moveEnemyShip(enemyShip, speed) {
         enemyShip.y += speed;
-        if(enemyShip.y > scene.game.config.height + 100) {
+        if(enemyShip.y > this.scene.game.config.height + 100) {
             this.resetShipPos(enemyShip);
         }
     }
@@ -26,7 +45,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     resetShipPos(ship) {
         ship.y = -100;
-        var randomX = Phaser.Math.Between(-100, this.game.config.width);
+        var randomX = Phaser.Math.Between(-100, this.scene.game.config.width);
         ship.x = randomX;
     }
 }
