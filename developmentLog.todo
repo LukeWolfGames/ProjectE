@@ -3,6 +3,7 @@
         Today, we come back from over a month of not coding because we have been working on the website.
         All class integrations with enemy ships are now working and with physics just like befroe except now they are all in classes.
         We now need to check to see if putting power ups in a class is worthy enough. It might be expecially if there are going to be multiple powerups - just with some variations.
+        For security reasons we are going to need to look at upgrading our templates to new versions before doing anymore work.
     07/07/2020 (Supplemental):
         Still working on complete class integration.
         The problem we are having is that grouping the enemies into a class seems harder than we thought.
