@@ -4,23 +4,25 @@ import EnemyFighter from "../classes/enemyFighter.js"
 import EnemyShuttle from "../classes/enemyShuttle.js"
 
 export default class Enemy extends Phaser.Physics.Arcade.Group {
-    constructor(scene, x, y, children) {
+    constructor(scene, world, x, y, children) {
         super(scene, x, y);
-        this.scene = scene;
-
-        this.createEnemyGroup(scene, children)
+        this.scene = scene; 
+        this.addMultiple(children, true)
+        // this.createEnemyGroup(scene, children)
+        
     }
 
     createEnemyGroup(scene, children) {
         children.forEach(enemy => {
-            // switch (enemy.texture.key) {
-            //     case enemyInterceptor:
-                    
-            //         break;
-            
-            //     default:
-            //         break;
-            // } 
+            switch (enemy.texture.key) {
+                case "enemyInterceptor":
+                    break;
+                case "EnemyFighter":
+                    break;
+                case "EnemyShuttle":
+                default:
+                    break;
+            } 
             console.log(enemy);
             enemy = new EnemyInterceptor(scene, enemy.x, enemy.y);
         });

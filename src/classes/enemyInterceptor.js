@@ -4,7 +4,9 @@ import Enemy from "./enemy.js";
 export default class EnemyInterceptor extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y) {
         super(scene, x, y, "enemyInterceptor");
-        // this.scene = scene;
+        this.scene = scene;
+        scene.add.existing(this);
+        scene.physics.add.existing(this, false);
         this.initAnim();
     }
 

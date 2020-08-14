@@ -1,0 +1,9 @@
+there's three enemies
+    interceptor
+    shuttle
+    fighter
+
+they share some properties
+    if you shoot them they get exploaded
+    they reset
+    they move

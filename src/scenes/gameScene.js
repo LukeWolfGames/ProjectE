@@ -2,6 +2,9 @@ import Phaser from "phaser";
 import Player from "../classes/player.js";
 import Enemy from "../classes/enemy.js";
 import Explosion from "../classes/explosion.js";
+import EnemyInterceptor from "../classes/enemyInterceptor.js";
+import EnemyFighter from "../classes/enemyFighter.js";
+import EnemyShuttle from "../classes/enemyShuttle.js";
 
 export default class GameScene extends Phaser.Scene {
     constructor() {
@@ -108,11 +111,14 @@ export default class GameScene extends Phaser.Scene {
             projectile.destroy()
         });
         this.physics.add.overlap(this.player, this.powerUps, this.pickPowerUp, null, this.player);
-        this.physics.add.overlap(this.player, this.enemies, this.player.hurtPlayer, null, this.player);
-        this.physics.add.overlap(this.projectiles, this.enemies, this.hitEnemy, null, this);
+        this.physics.add.overlap(this.player, this.enemyGroup, this.player.hurtPlayer, null, this.player);
+        this.physics.add.overlap(this.projectiles, this.enemyGroup, this.hitEnemy, null, this);
 
         // score
         this.scoreLabel = this.add.bitmapText(this.game.config.width / 2, 5, "pixelFont", "$0", 16);
+        console.log(this.enemyInterceptor);
+        console.log(this.enemyFighter);
+        console.log(this.enemyShuttle);
     }
 
     update() {
@@ -127,9 +133,9 @@ export default class GameScene extends Phaser.Scene {
         }
 
         // moving ships
-        this.enemyInterceptor.moveEnemyShip(this.enemyInterceptor, 3);
-        this.enemyFighter.moveEnemyShip(this.enemyFighter, 2);
-        this.enemyShuttle.moveEnemyShip(this.enemyShuttle, 1.5);
+        this.enemyGroup.moveEnemyShip(this.enemyInterceptor, 3);
+        this.enemyGroup.moveEnemyShip(this.enemyFighter, 2);
+        this.enemyGroup.moveEnemyShip(this.enemyShuttle, 1.5);
     }
 
     moveBackground(background, backgroundSpeed) {
